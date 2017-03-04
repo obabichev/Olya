@@ -1,0 +1,14 @@
+{
+  "date": {
+    "startDate": "10.11.2017",
+    "repeatable": true,
+    "period": "week"
+  },
+  "status": "done",
+  "content": {
+    "title": "TITLE",
+    "text": "TEXT",
+    "color": "#FF00FF"
+  },
+  "comment": "comment"
+}
