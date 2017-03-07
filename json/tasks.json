@@ -1,0 +1,42 @@
+[
+  {
+    "date": {
+      "startDate": "2017-03-07T13:08:01.816Z",
+      "repeatable": false
+    },
+    "status": "in_progress",
+    "content": {
+      "title": "IN PROGRESS",
+      "text": "progress progress progress progress progress progress progress progress progress",
+      "color": "#00FF00"
+    },
+    "comment": "comment"
+  },
+  {
+    "date": {
+      "startDate": "2017-03-07T13:08:01.816Z",
+      "repeatable": true,
+      "period": "week"
+    },
+    "status": "done",
+    "content": {
+      "title": "DONE",
+      "text": "done done done done done done done done done",
+      "color": "#0000FF"
+    },
+    "comment": "comment"
+  },
+  {
+    "date": {
+      "startDate": "2017-03-07T13:08:01.816Z",
+      "repeatable": false
+    },
+    "status": "created",
+    "content": {
+      "title": "CREATED",
+      "text": "created created created created created created created created",
+      "color": "#FF0000"
+    },
+    "comment": "comment"
+  }
+]
