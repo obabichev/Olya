@@ -17,13 +17,13 @@ class SideBar extends Component {
     render() {
         return (
             <View style={styles.container}>
-                {this.delimeter()}
-                <Button block
-                        onPress={this.props.openAnimeListScreen}
-                        color={color.PRIMARY_COLOR_DARK}>
-                    <Text>Anime list</Text>
-                </Button>
-                {this.delimeter()}
+                {/*{this.delimeter()}*/}
+                {/*<Button block*/}
+                        {/*onPress={this.props.openAnimeListScreen}*/}
+                        {/*color={color.PRIMARY_COLOR_DARK}>*/}
+                    {/*<Text>Anime list</Text>*/}
+                {/*</Button>*/}
+                {/*{this.delimeter()}*/}
             </View>
         );
     }

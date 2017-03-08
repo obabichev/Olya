@@ -1,6 +1,7 @@
 {
   "date": {
-    "startDate": "10.11.2017",
+    "startDate": 1488983227268,
+    "endDate": null,
     "repeatable": true,
     "period": "week"
   },
