@@ -1,10 +1,12 @@
 'use strict';
 
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
+// import {} from 'react-native';
 import {Container, Header, Title, Button, Text, Left, Right, Body, Icon, Content, List, ListItem} from 'native-base';
 import {connect} from 'react-redux';
 
 import {uploadTasks} from '../../actions/tasks';
+import {dateToDayid} from '../../util';
 
 class TasksList extends Component {
 
@@ -19,7 +21,10 @@ class TasksList extends Component {
     </ListItem>;
 
     render() {
-        console.log(`Number of tasks: ${this.props.tasks.length}`);
+        console.log(this.props.date);
+        if (this.props.tasks) {
+            console.log(`Number of tasks: ${this.props.tasks.length}`);
+        }
         return (
             <Container>
                 <Header>
@@ -41,11 +46,15 @@ class TasksList extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    tasks: state.tasks.tasks
+TasksList.propTypes = {
+    date: PropTypes.any.isRequired
+};
+
+const mapStateToProps = (state, ownProps) => ({
+    tasks: state.tasks.tasks[dateToDayid(ownProps.date)]
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
     updateTasks: () => dispatch(uploadTasks())
 });
 

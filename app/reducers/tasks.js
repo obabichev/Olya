@@ -2,7 +2,6 @@
 
 import * as tasksTypes from '../constatns/tasks';
 
-const testData = require('../../json/tasks.json');
 
 const initialState = {
     tasks: {}

@@ -16,7 +16,7 @@ class MainRouter extends Component {
             case screenConstans.SPLASH_SCREEN:
                 return <SplashScreen/>;
             case screenConstans.TASKS_LIST_SCREEN:
-                return <TasksList/>;
+                return <TasksList date={new Date()}/>;
             case screenConstans.LAUNCH_SCREEN:
                 return <Launch/>;
             default:
