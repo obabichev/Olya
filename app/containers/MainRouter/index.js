@@ -4,17 +4,20 @@ import React, {Component} from 'react';
 import {AsyncStorage} from 'react-native';
 import {connect} from 'react-redux';
 
-import {SPLASH_SCREEN, LAUNCH_SCREEN} from '../../constatns/screens';
+import * as screenConstans from '../../constatns/screens';
 import SplashScreen from '../SplashScreen';
 import Launch from '../LaunchScreen';
+import TasksList from '../TasksList';
 
 class MainRouter extends Component {
 
     render() {
         switch (this.props.route) {
-            case SPLASH_SCREEN:
+            case screenConstans.SPLASH_SCREEN:
                 return <SplashScreen/>;
-            case LAUNCH_SCREEN:
+            case screenConstans.TASKS_LIST_SCREEN:
+                return <TasksList/>;
+            case screenConstans.LAUNCH_SCREEN:
                 return <Launch/>;
             default:
                 return null;

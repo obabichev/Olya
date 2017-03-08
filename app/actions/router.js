@@ -1,23 +1,22 @@
 'use strict';
 
-import {
-    OPEN_LAUNCH_SCREEN,
-    START_DOWNLOADING,
-    STOP_DOWNLOADING,
-    OPEN_NAV_BAR,
-    CLOSE_NAV_BAR
-} from '../constatns/router';
-import {LAUNCH_SCREEN} from '../constatns/screens';
+import * as routerConstants from '../constatns/router';
+import * as screenConstants from '../constatns/screens';
 
 export const openNavBar = () => ({
-    type: OPEN_NAV_BAR
+    type: routerConstants.OPEN_NAV_BAR
 });
 
 export const closeNavBar = () => ({
-    type: CLOSE_NAV_BAR
+    type: routerConstants.CLOSE_NAV_BAR
 });
 
 export const openLaunchScreen = () => ({
-    type: OPEN_LAUNCH_SCREEN,
-    route: LAUNCH_SCREEN
+    type: routerConstants.OPEN_LAUNCH_SCREEN,
+    route: screenConstants.LAUNCH_SCREEN
+});
+
+export const openTasksListScreen = () => ({
+    type: routerConstants.OPEN_TASKS_LIST_SCREEN,
+    route: screenConstants.TASKS_LIST_SCREEN
 });
