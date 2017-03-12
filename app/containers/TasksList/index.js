@@ -1,9 +1,11 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-// import {} from 'react-native';
+import {View} from 'react-native';
 import {Container, Header, Title, Button, Text, Left, Right, Body, Icon, Content, List, ListItem} from 'native-base';
 import {connect} from 'react-redux';
+import {connectStyle} from 'native-base';
+
 
 import {uploadTasks} from '../../actions/tasks';
 import {dateToDayid} from '../../util';
@@ -16,15 +18,36 @@ class TasksList extends Component {
 
     renderTasksList = () => <List dataArray={this.props.tasks} renderRow={this.renderTaskItem}/>;
 
-    renderTaskItem = task => <ListItem>
-        <Text>HI</Text>
-    </ListItem>;
+    renderTaskItem = task => {
+        const backgroundStyle = {
+            backgroundColor: task.content.color + '7F',
+            width: 10000,
+            height: 10000,
+            position: 'absolute',
+            left: 0,
+            top: 0,
+        };
+
+        const internalBackground = {
+            ...backgroundStyle,
+            backgroundColor: task.content.color,
+            width: 10,
+        };
+
+        return <ListItem thumbnail>
+            <View style={styles.container}>
+                <View style={backgroundStyle}>
+                    <View style={internalBackground}/>
+                </View>
+                <Body>
+                <Text>{task.content.title}</Text>
+                <Text note>{task.content.text}</Text>
+                </Body>
+            </View>
+        </ListItem>;
+    };
 
     render() {
-        console.log(this.props.date);
-        if (this.props.tasks) {
-            console.log(`Number of tasks: ${this.props.tasks.length}`);
-        }
         return (
             <Container>
                 <Header>
@@ -58,7 +81,13 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     updateTasks: () => dispatch(uploadTasks())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TasksList);
+const styles = {
+    container: {
+        flex: 1
+    }
+};
 
+const StyledTasksList = connectStyle('mainTheme.TasksList', styles)(TasksList);
 
+export default connect(mapStateToProps, mapDispatchToProps)(StyledTasksList);
 
