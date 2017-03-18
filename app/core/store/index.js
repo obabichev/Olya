@@ -23,7 +23,7 @@ const enhancer = composeWithDevTools({})(
 
 export default function configureStore(initialState) {
     const store = createStore(reducer, initialState, enhancer);
-    persistStore(store, persistingOptions, () => store.dispatch(openCreateTaskScreen()));
+    persistStore(store, persistingOptions, () => store.dispatch(openLaunchScreen()));
 
     if (module.hot) {
         module.hot.accept(() => {

@@ -6,7 +6,7 @@ import {genUrl} from './util';
 
 export async function fetchTasksList() {
     let result = await get(genUrl(`/tasks`));
-    return result.data;
+    return result;
 }
 
 export async function createTaskRequest(task) {

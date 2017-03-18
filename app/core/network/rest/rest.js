@@ -1,5 +1,7 @@
 'use strict';
 
+import {validateResponseBody, validateResponseStatus} from '../validator';
+
 export async function get(path) {
 
     let result = await fetch(path, {
@@ -9,7 +11,12 @@ export async function get(path) {
 
     console.log(`GET: ${path}, status:${result.status}`);
 
-    return result.json();
+    validateResponseStatus(result.status);
+
+    let resultBody = await result.json();
+    validateResponseBody(resultBody);
+
+    return resultBody.data;
 }
 
 export async function post(path, body) {
@@ -26,13 +33,12 @@ export async function post(path, body) {
 
     console.log(`POST: ${path}, status:${result.status}`);
 
-    let resultJson = await result.json();
+    validateResponseStatus(result.status);
 
-    if (resultJson.status !== 'ok') {
-        throw {message: JSON.stringify(resultJson)};
-    }
+    let resultBody = await result.json();
+    validateResponseBody(resultBody);
 
-    return resultJson;
+    return resultBody.data;
 }
 
 function sleep(ms) {

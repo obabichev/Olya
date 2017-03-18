@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 
 import CreateTaskForm from '../../components/tasks/CreateTaskForm';
 
+import {openTasksListScreen} from '../../actions/router';
 import {createTask} from '../../actions/tasks';
 
 class CreateTaskScreen extends PureComponent {
@@ -18,8 +19,8 @@ class CreateTaskScreen extends PureComponent {
         return (<Container>
             <Header>
                 <Left>
-                    <Button transparent>
-                        <Icon name='menu'/>
+                    <Button transparent onPress={this.props.back}>
+                        <Icon name='arrow-back'/>
                     </Button>
                 </Left>
                 <Body>
@@ -35,7 +36,8 @@ class CreateTaskScreen extends PureComponent {
 }
 
 const mapDispatchToProps = dispatch => ({
-    saveNewTask: task => dispatch(createTask(task))
+    saveNewTask: task => dispatch(createTask(task)),
+    back: () => dispatch(openTasksListScreen())
 });
 
 export default connect(undefined, mapDispatchToProps)(CreateTaskScreen);

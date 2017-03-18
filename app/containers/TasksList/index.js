@@ -2,11 +2,26 @@
 
 import React, {Component, PropTypes} from 'react';
 import {View} from 'react-native';
-import {Container, Header, Title, Button, Text, Left, Right, Body, Icon, Content, List, ListItem} from 'native-base';
+import {
+    Container,
+    Header,
+    Title,
+    Button,
+    Text,
+    Left,
+    Right,
+    Body,
+    Icon,
+    Content,
+    List,
+    ListItem,
+    Fab
+} from 'native-base';
 import {connect} from 'react-redux';
 import {connectStyle} from 'native-base';
 
 
+import {openCreateTaskScreen} from '../../actions/router';
 import {uploadTasks} from '../../actions/tasks';
 import {dateToDayid} from '../../util';
 
@@ -64,6 +79,14 @@ class TasksList extends Component {
                 <Content>
                     {this.renderTasksList()}
                 </Content>
+                <Fab
+                    active
+                    style={{ backgroundColor: '#5067FF' }}
+                    position="bottomRight"
+                    onPress={() => this.props.navigateToCreateTaskScreen()}
+                >
+                    <Icon name="add"/>
+                </Fab>
             </Container>
         );
     }
@@ -78,7 +101,8 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    updateTasks: () => dispatch(uploadTasks())
+    updateTasks: () => dispatch(uploadTasks()),
+    navigateToCreateTaskScreen: () => dispatch(openCreateTaskScreen())
 });
 
 const styles = {
