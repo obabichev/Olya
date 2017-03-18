@@ -8,6 +8,8 @@ import * as screenConstans from '../../constatns/screens';
 import SplashScreen from '../SplashScreen';
 import Launch from '../LaunchScreen';
 import TasksList from '../TasksList';
+import CreateTaskScreen from '../CreateTaskScreen';
+
 
 class MainRouter extends Component {
 
@@ -19,6 +21,8 @@ class MainRouter extends Component {
                 return <TasksList date={new Date()}/>;
             case screenConstans.LAUNCH_SCREEN:
                 return <Launch/>;
+            case screenConstans.CREATE_TASK_SCREEN:
+                return <CreateTaskScreen/>;
             default:
                 return null;
         }

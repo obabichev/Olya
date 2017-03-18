@@ -1,0 +1,17 @@
+{
+  "1": {
+    "label": "Lowest"
+  },
+  "250": {
+    "label": "Low"
+  },
+  "500": {
+    "label": "Normal"
+  },
+  "750": {
+    "label": "High"
+  },
+  "1000": {
+    "label": "Highest"
+  }
+}

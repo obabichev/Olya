@@ -57,7 +57,7 @@ class TasksList extends Component {
                         </Button>
                     </Left>
                     <Body>
-                    <Title>Header</Title>
+                    <Title>Tasks list</Title>
                     </Body>
                     <Right />
                 </Header>

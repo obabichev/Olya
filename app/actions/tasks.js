@@ -2,7 +2,7 @@
 
 import * as tasksTypes from '../constatns/tasks';
 
-import {fetchTasksList} from '../core/network/tasks';
+import {fetchTasksList, createTaskRequest} from '../core/network/tasks';
 
 import * as util from '../util';
 
@@ -23,6 +23,19 @@ const fetchTasksListAction = () => {
     let date = new Date();
     return dispatch => fetchTasksList().then(
         tasks => dispatch(updateTasks(tasks, util.dateToDayid(date))),
+        error => console.log(`Error ${error.message}`)
+    );
+};
+
+const addTask = (task, dayid) => ({
+    type: tasksTypes.ADD_TASK_ACTION,
+    dayid: dayid,
+    task: task
+});
+
+export const createTask = task => {
+    return dispatch => createTaskRequest(task).then(
+        result => dispatch(addTask(task, util.dateToDayid(new Date(task.date.start)))),
         error => console.log(`Error ${error.message}`)
     );
 };

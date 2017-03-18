@@ -20,3 +20,8 @@ export const openTasksListScreen = () => ({
     type: routerConstants.OPEN_TASKS_LIST_SCREEN,
     route: screenConstants.TASKS_LIST_SCREEN
 });
+
+export const openCreateTaskScreen = () => ({
+    type: routerConstants.OPEN_CREATE_TASK_SCREEN,
+    route: screenConstants.CREATE_TASK_SCREEN
+});

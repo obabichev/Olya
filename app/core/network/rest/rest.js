@@ -17,15 +17,22 @@ export async function post(path, body) {
     let result = await fetch(path, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
         },
-        body: body ? JSON.stringify(body) : null
+        body: body ? JSON.stringify(body) : ''
     });
 
     // await sleep(5000);
 
     console.log(`POST: ${path}, status:${result.status}`);
-    return result.json();
+
+    let resultJson = await result.json();
+
+    if (resultJson.status !== 'ok') {
+        throw {message: JSON.stringify(resultJson)};
+    }
+
+    return resultJson;
 }
 
 function sleep(ms) {

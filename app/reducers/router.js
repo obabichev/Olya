@@ -1,10 +1,10 @@
 'use strict';
 
 import * as routerConstants from '../constatns/router';
-import {SPLASH_SCREEN, LAUNCH_SCREEN} from '../constatns/screens';
+import * as screenConstants from '../constatns/screens';
 
 const initialRoute = {
-    route: SPLASH_SCREEN,
+    route: screenConstants.SPLASH_SCREEN,
     downloading: false,
     openNavBar: false
 };
@@ -20,6 +20,11 @@ const router = (state = initialRoute, action) => {
                 route: action.route
             };
         case routerConstants.OPEN_TASKS_LIST_SCREEN:
+            return {
+                ...state,
+                route: action.route
+            };
+        case routerConstants.OPEN_CREATE_TASK_SCREEN:
             return {
                 ...state,
                 route: action.route
