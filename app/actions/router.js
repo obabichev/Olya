@@ -25,3 +25,13 @@ export const openCreateTaskScreen = () => ({
     type: routerConstants.OPEN_CREATE_TASK_SCREEN,
     route: screenConstants.CREATE_TASK_SCREEN
 });
+
+export const startDownloading = () => ({
+    type: routerConstants.START_DOWNLOADING,
+    downloading: true
+});
+
+export const stopDownloading = () => ({
+    type: routerConstants.STOP_DOWNLOADING,
+    downloading: false
+});

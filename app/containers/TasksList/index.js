@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {View} from 'react-native';
+import {View, RefreshControl} from 'react-native';
 import {
     Container,
     Header,
@@ -15,6 +15,7 @@ import {
     Content,
     List,
     ListItem,
+    Spinner,
     Fab
 } from 'native-base';
 import {connect} from 'react-redux';
@@ -62,6 +63,13 @@ class TasksList extends Component {
         </ListItem>;
     };
 
+    refreshControl = () => <RefreshControl
+        refreshing={this.props.downloading}
+        onRefresh={this.refresh}
+    />;
+
+    refresh = () => this.props.updateTasks();
+
     render() {
         return (
             <Container>
@@ -76,7 +84,8 @@ class TasksList extends Component {
                     </Body>
                     <Right />
                 </Header>
-                <Content>
+                <Content refreshControl={this.refreshControl()}>
+                    {this.props.downloading ? (<Spinner color='blue'/>) : null}
                     {this.renderTasksList()}
                 </Content>
                 <Fab
@@ -97,7 +106,8 @@ TasksList.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-    tasks: state.tasks.tasks[dateToDayid(ownProps.date)]
+    tasks: state.tasks.tasks[dateToDayid(ownProps.date)],
+    downloading: state.router.downloading,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

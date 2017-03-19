@@ -2,6 +2,7 @@
 
 import {Alert} from 'react-native';
 
+import {openTasksListScreen, startDownloading, stopDownloading} from './router'
 import * as tasksTypes from '../constatns/tasks';
 
 import {fetchTasksList, createTaskRequest} from '../core/network/tasks';
@@ -17,7 +18,9 @@ const updateTasks = (tasks, dayid) => ({
 export const uploadTasks = () => {
     return dispatch => {
         return Promise.resolve()
-            .then(() => dispatch(fetchTasksListAction()));
+            .then(() => dispatch(startDownloading()))
+            .then(() => dispatch(fetchTasksListAction()))
+            .then(() => dispatch(stopDownloading()))
     };
 };
 
@@ -29,15 +32,21 @@ const fetchTasksListAction = () => {
     );
 };
 
+export const createTask = task => dispatch => Promise.resolve()
+    .then(() => dispatch(createTaskCall(task)));
+
+export const createTaskCall = task => {
+    return dispatch => createTaskRequest(task).then(
+        result => {
+            dispatch(addTask(task, util.dateToDayid(new Date(task.date.start))));
+            dispatch(openTasksListScreen());
+        },
+        error => Alert.alert(`Error ${error.message}`)
+    );
+};
+
 const addTask = (task, dayid) => ({
     type: tasksTypes.ADD_TASK_ACTION,
     dayid: dayid,
     task: task
 });
-
-export const createTask = task => {
-    return dispatch => createTaskRequest(task).then(
-        result => dispatch(addTask(task, util.dateToDayid(new Date(task.date.start)))),
-        error => Alert.alert(`Error ${error.message}`)
-    );
-};
