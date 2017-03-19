@@ -33,7 +33,9 @@ const fetchTasksListAction = () => {
 };
 
 export const createTask = task => dispatch => Promise.resolve()
-    .then(() => dispatch(createTaskCall(task)));
+    .then(() => dispatch(startDownloading()))
+    .then(() => dispatch(createTaskCall(task)))
+    .then(() => dispatch(stopDownloading()));
 
 export const createTaskCall = task => {
     return dispatch => createTaskRequest(task).then(

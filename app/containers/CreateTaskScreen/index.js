@@ -29,15 +29,21 @@ class CreateTaskScreen extends PureComponent {
                 <Right />
             </Header>
             <Content>
-                <CreateTaskForm onSubmit={this.onSaveTask}/>
+                <CreateTaskForm
+                    onSubmit={this.onSaveTask}
+                    downloading={this.props.downloading}/>
             </Content>
         </Container>);
     }
 }
+
+const mapStateToProps = state => ({
+    downloading: state.router.downloading,
+});
 
 const mapDispatchToProps = dispatch => ({
     saveNewTask: task => dispatch(createTask(task)),
     back: () => dispatch(openTasksListScreen())
 });
 
-export default connect(undefined, mapDispatchToProps)(CreateTaskScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateTaskScreen);

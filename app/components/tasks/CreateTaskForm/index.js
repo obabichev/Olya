@@ -2,12 +2,10 @@
 
 import React, {PureComponent, PropTypes} from 'react';
 import {View, Dimensions} from 'react-native';
-import {Item, Picker, Text, Form, Label, Input, Content, Button} from 'native-base';
+import {Item, Picker, Text, Form, Label, Input, Content, Button, Spinner} from 'native-base';
 import {ColorPicker} from 'react-native-color-picker'
 import {fromHsv} from 'react-native-color-picker'
 import CalendarPicker from 'react-native-calendar-picker';
-
-import {connect} from 'react-redux';
 
 import _ from 'lodash';
 
@@ -89,13 +87,18 @@ class CreateTaskForm extends PureComponent {
                 defaultColor={this.state.content.color}
                 style={{width: dimensions.width - 10, height: dimensions.width - 10, margin: 5}}
             />
-            <Button style={{margin: 10}} primary block onPress={this.onSubmit}><Text> Save </Text></Button>
+            {this.renderSubmitButton()}
         </Form>);
     }
+
+    renderSubmitButton = () => this.props.downloading ?
+        <Spinner color='blue'/> :
+        <Button style={{margin: 10}} primary block onPress={this.onSubmit}><Text> Save </Text></Button>;
 }
 
 CreateTaskForm.propTypes = {
     onSubmit: PropTypes.func,
+    downloading: PropTypes.bool,
 };
 
-export default connect()(CreateTaskForm);
+export default CreateTaskForm;

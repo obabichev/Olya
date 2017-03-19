@@ -29,7 +29,9 @@ import {dateToDayid} from '../../util';
 class TasksList extends Component {
 
     componentDidMount() {
-        this.props.updateTasks();
+        if (!this.props.tasks) {
+            this.props.updateTasks();
+        }
     }
 
     renderTasksList = () => <List dataArray={this.props.tasks} renderRow={this.renderTaskItem}/>;
