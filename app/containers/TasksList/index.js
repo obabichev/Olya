@@ -22,9 +22,11 @@ import {connect} from 'react-redux';
 import {connectStyle} from 'native-base';
 
 
-import {openCreateTaskScreen} from '../../actions/router';
+import {push} from '../../actions/router';
 import {uploadTasks} from '../../actions/tasks';
 import {dateToDayid} from '../../util';
+
+import * as screens from '../../constatns/screens';
 
 class TasksList extends Component {
 
@@ -114,7 +116,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     updateTasks: () => dispatch(uploadTasks()),
-    navigateToCreateTaskScreen: () => dispatch(openCreateTaskScreen())
+    navigateToCreateTaskScreen: () => dispatch(push({key: screens.CREATE_TASK_SCREEN}))
 });
 
 const styles = {

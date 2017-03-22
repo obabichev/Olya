@@ -2,8 +2,9 @@
 
 import {Alert} from 'react-native';
 
-import {openTasksListScreen, startDownloading, stopDownloading} from './router'
+import {push, startDownloading, stopDownloading} from './router'
 import * as tasksTypes from '../constatns/tasks';
+import * as screens from '../constatns/screens';
 
 import {fetchTasksList, createTaskRequest} from '../core/network/tasks';
 
@@ -41,7 +42,7 @@ export const createTaskCall = task => {
     return dispatch => createTaskRequest(task).then(
         result => {
             dispatch(addTask(task, util.dateToDayid(new Date(task.date.start))));
-            dispatch(openTasksListScreen());
+            dispatch(push({key: screens.CREATE_TASK_SCREEN}));
         },
         error => Alert.alert(`Error ${error.message}`)
     );

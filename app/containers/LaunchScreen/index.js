@@ -4,7 +4,8 @@ import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import {connect} from 'react-redux';
 
-import {openTasksListScreen} from '../../actions/router';
+import {reset} from '../../actions/router';
+import * as screens from '../../constatns/screens';
 
 class LaunchScreen extends Component {
 
@@ -25,7 +26,7 @@ class LaunchScreen extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    openTasksListScreen: () => dispatch(openTasksListScreen())
+    openTasksListScreen: () => dispatch(reset({key: screens.TASKS_LIST_SCREEN}))
 });
 
 export default connect(undefined, mapDispatchToProps)(LaunchScreen);

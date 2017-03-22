@@ -1,10 +1,10 @@
 'use strict';
 
-export const OPEN_LAUNCH_SCREEN = 'OPEN_LAUNCH_SCREEN';
+export const PUSH_ROUTE = 'PUSH_ROUTE';
 
-export const OPEN_TASKS_LIST_SCREEN = 'OPEN_TASKS_LIST_SCREEN';
+export const POP_ROUTE = 'POP_ROUTE';
 
-export const OPEN_CREATE_TASK_SCREEN = 'OPEN_CREATE_TASK_SCREEN';
+export const RESET_ROUTE = 'RESET_ROUTE';
 
 
 export const START_DOWNLOADING = 'START_DOWNLOADING';

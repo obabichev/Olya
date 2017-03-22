@@ -1,7 +1,21 @@
 'use strict';
 
 import * as routerConstants from '../constatns/router';
-import * as screenConstants from '../constatns/screens';
+
+export const push = route => ({
+    type: routerConstants.PUSH_ROUTE,
+    route
+});
+
+export const pop = () => ({
+    type: routerConstants.POP_ROUTE
+});
+
+export const reset = route => ({
+    type: routerConstants.RESET_ROUTE,
+    route
+});
+
 
 export const openNavBar = () => ({
     type: routerConstants.OPEN_NAV_BAR
@@ -9,21 +23,6 @@ export const openNavBar = () => ({
 
 export const closeNavBar = () => ({
     type: routerConstants.CLOSE_NAV_BAR
-});
-
-export const openLaunchScreen = () => ({
-    type: routerConstants.OPEN_LAUNCH_SCREEN,
-    route: screenConstants.LAUNCH_SCREEN
-});
-
-export const openTasksListScreen = () => ({
-    type: routerConstants.OPEN_TASKS_LIST_SCREEN,
-    route: screenConstants.TASKS_LIST_SCREEN
-});
-
-export const openCreateTaskScreen = () => ({
-    type: routerConstants.OPEN_CREATE_TASK_SCREEN,
-    route: screenConstants.CREATE_TASK_SCREEN
 });
 
 export const startDownloading = () => ({

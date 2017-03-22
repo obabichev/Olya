@@ -3,31 +3,43 @@
 import * as routerConstants from '../constatns/router';
 import * as screenConstants from '../constatns/screens';
 
+import {NavigationExperimental} from 'react-native'
+const {
+    StateUtils: NavigationStateUtils
+} = NavigationExperimental;
+
+
 const initialRoute = {
-    route: screenConstants.SPLASH_SCREEN,
+    index: 0,
+    key: 'root',
+    routes: [{
+        key: screenConstants.SPLASH_SCREEN,
+        title: 'Home'
+    }],
+
     downloading: false,
     openNavBar: false
 };
+
 
 const router = (state = initialRoute, action) => {
     if (action.route) {
         console.log(`Switch to ${action.route}`);
     }
     switch (action.type) {
-        case routerConstants.OPEN_LAUNCH_SCREEN:
+        case routerConstants.PUSH_ROUTE:
+            if (state.routes[state.index].key === (action.route && action.route.key)) return state;
+            return NavigationStateUtils.push(state, action.route);
+
+        case routerConstants.POP_ROUTE:
+            if (state.index === 0 || state.routes.length === 1) return state;
+            return NavigationStateUtils.pop(state);
+
+        case routerConstants.RESET_ROUTE:
             return {
                 ...state,
-                route: action.route
-            };
-        case routerConstants.OPEN_TASKS_LIST_SCREEN:
-            return {
-                ...state,
-                route: action.route
-            };
-        case routerConstants.OPEN_CREATE_TASK_SCREEN:
-            return {
-                ...state,
-                route: action.route
+                index: 0,
+                routes: [action.route],
             };
 
         case routerConstants.START_DOWNLOADING:

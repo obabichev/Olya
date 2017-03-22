@@ -8,7 +8,13 @@ import thunk from 'redux-thunk';
 
 import {composeWithDevTools} from 'redux-devtools-extension'
 
-import {openLaunchScreen, openCreateTaskScreen} from '../../actions/router';
+import {reset} from '../../actions/router';
+import {LAUNCH_SCREEN} from '../../constatns/screens';
+
+const route = {
+    key: LAUNCH_SCREEN,
+    title: 'Launch'
+};
 
 const persistingOptions = {
     storage: AsyncStorage,
@@ -23,7 +29,7 @@ const enhancer = composeWithDevTools({})(
 
 export default function configureStore(initialState) {
     const store = createStore(reducer, initialState, enhancer);
-    persistStore(store, persistingOptions, () => store.dispatch(openLaunchScreen()));
+    persistStore(store, persistingOptions, () => store.dispatch(reset(route)));
 
     if (module.hot) {
         module.hot.accept(() => {
