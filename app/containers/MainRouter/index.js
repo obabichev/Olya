@@ -34,20 +34,20 @@ class MainRouter extends Component {
     }
 
     _handleBackAction = () => {
-        if (this.props.navigation.index === 0) {
+        if (this.props.index === 0) {
             return false
         }
         this.props.popRoute();
         return true
     };
 
-    _renderScene(props) {
-        const {route} = props.scene;
-        switch (route.key) {
+    _renderScene() {
+        const {scene} = this.props;
+        switch (scene.key) {
             case screenConstans.SPLASH_SCREEN:
                 return <SplashScreen/>;
             case screenConstans.TASKS_LIST_SCREEN:
-                return <TasksList date={new Date()}/>;
+                return <TasksList/>;
             case screenConstans.LAUNCH_SCREEN:
                 return <Launch/>;
             case screenConstans.CREATE_TASK_SCREEN:
@@ -60,23 +60,18 @@ class MainRouter extends Component {
     }
 
     render() {
-        return (
-            <NavigationCardStack
-                direction='vertical'
-                navigationState={this.props.navigation}
-                renderScene={this._renderScene}/>
-        )
+        return this._renderScene();
     }
 }
 
 const mapStateToProps = state => {
     return {
-        navigation: state.router,
+        scene: state.router.scene,
+        index: state.router.routes.length - 1
     }
 };
 
 const mapDispatchToProps = dispatch => ({
-    pushRoute: (route) => dispatch(push(route)),
     popRoute: () => dispatch(pop())
 });
 

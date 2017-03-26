@@ -10,15 +10,14 @@ const {
     StateUtils: NavigationStateUtils
 } = NavigationExperimental;
 
+const initScene = {
+    key: screenConstants.SPLASH_SCREEN,
+    title: 'Home'
+};
 
 const initialRoute = {
-    index: 0,
-    key: 'root',
-    routes: [{
-        key: screenConstants.SPLASH_SCREEN,
-        title: 'Home'
-    }],
-
+    scene: initScene,
+    routes: [initScene],
     downloading: false,
     openNavBar: false
 };
@@ -30,23 +29,34 @@ const router = (state = initialRoute, action) => {
     }
     switch (action.type) {
         case routerConstants.PUSH_ROUTE:
-            if (state.routes[state.index].key === (action.route && action.route.key)) return state;
-            return NavigationStateUtils.push(state, action.route);
+            // if (state.routes[state.index].key === (action.route && action.route.key)) return state;
+            return {
+                ...state,
+                scene: action.route,
+                routes: _.concat(state.routes, action.route)
+            };
 
         case routerConstants.POP_ROUTE:
-            if (state.index === 0 || state.routes.length === 1) return state;
-            return NavigationStateUtils.pop(state);
+            if (state.routes.length === 1) return state;
+            let routes = _.dropRight(state.routes);
+            return {
+                ...state,
+                scene: _.last(routes),
+                routes: routes
+            };
 
         case routerConstants.RESET_ROUTE:
             return {
                 ...state,
-                index: 0,
+                scene: action.route,
                 routes: [action.route],
             };
         case routerConstants.REPLACE_LAST:
+            routes = _.concat(_.dropRight(state.routes), action.route);
             return {
                 ...state,
-                routes: _.concat(_.dropRight(state.routes), action.route)
+                scene: _.last(routes),
+                routes: routes,
             };
 
 

@@ -54,7 +54,7 @@ TaskDetailsScreen.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-    task: state.tasks[state.router.routes[state.router.index].taskId]
+    task: state.tasks[state.router.scene.taskId]
 });
 
 const mapDispatchToProps = dispatch => ({});
