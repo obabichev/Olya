@@ -118,7 +118,9 @@ class TasksList extends Component {
                 </Content>
                 <Fab
                     style={{ backgroundColor: '#5067FF'}}
+                    containerStyle={styles.fab}
                     position="bottomRight"
+                    active={false}
                     onPress={() => this.props.navigateToCreateTaskScreen()}
                 >
                     <Icon name="add"/>
@@ -150,6 +152,19 @@ TasksList.propTypes = {
     date: PropTypes.any.isRequired
 };
 
+const styles = {
+    container: {
+        flex: 1
+    },
+    fab: {
+        position: 'absolute',
+        right: 16,
+        bottom: 64
+    }
+
+};
+
+
 const mapStateToProps = (state, ownProps) => {
     let date = new Date(_.last(state.router.routes).timestamp);
     return {
@@ -171,11 +186,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     moveToDate: timestamp => dispatch(replaceLast({key: screens.TASKS_LIST_SCREEN, timestamp: timestamp}))
 });
 
-const styles = {
-    container: {
-        flex: 1
-    }
-};
 
 const StyledTasksList = connectStyle('mainTheme.TasksList', styles)(TasksList);
 
