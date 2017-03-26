@@ -3,10 +3,6 @@
 import React, {Component, PropTypes} from 'react';
 import {View, RefreshControl} from 'react-native';
 import {
-    BackAndroid,
-    NavigationExperimental
-} from 'react-native';
-import {
     Container,
     Header,
     Title,
@@ -21,8 +17,6 @@ import {
     ListItem,
     Spinner,
     Fab,
-    DeckSwiper,
-    Swipeout,
     Footer,
     FooterTab
 } from 'native-base';
@@ -36,9 +30,7 @@ import {showModal} from '../../../actions/modal';
 
 import {push, replaceLast} from '../../../actions/router';
 import {uploadTasks} from '../../../actions/tasks';
-import {dateToDayid, isTheSameDay} from '../../../util';
-
-import CalendarDialog from '../../../components/calendar/CalendarDialog';
+import {isTheSameDay} from '../../../util';
 
 import * as screens from '../../../constatns/screens';
 
@@ -56,23 +48,7 @@ class TasksList extends Component {
         if (_.keys(this.props.tasks).length === 0) {
             this.props.updateTasks();
         }
-
-        // BackAndroid.addEventListener('hardwareBackPress', this.handleBackAction)
     }
-
-    // componentWillUnmount() {
-    //     BackAndroid.removeEventListener('hardwareBackPress', this.handleBackAction)
-    // }
-
-    // handleBackAction = () => {
-    //     if (!this.showCalendarDialog) {
-    //         return;
-    //     }
-    //     this.setState({
-    //         showCalendarDialog: false,
-    //     });
-    //     return true
-    // };
 
     renderTasksList = () => <List dataArray={this.props.tasks} renderRow={this.renderTaskItem}/>;
 
@@ -130,18 +106,7 @@ class TasksList extends Component {
 
     showCalendarDialog = () => {
         this.props.showCalendarPicker();
-        return;
-        this.setState({showCalendarDialog: true});
-
-        let backListener = () => {
-            this.setState({showCalendarDialog: false});
-            BackAndroid.removeEventListener('hardwareBackPress', backListener);
-            return true;
-        };
-        BackAndroid.addEventListener('hardwareBackPress', backListener)
     };
-
-    renderCalendarDialog = () => (<CalendarDialog/>);
 
     render() {
         const {date} = this.props;
@@ -189,19 +154,10 @@ class TasksList extends Component {
                         </Button>
                     </FooterTab>
                 </Footer>
-
-                <View></View>
-
-                {this.state.showCalendarDialog ? this.renderCalendarDialog() : null}
-
             </Container>
         );
     }
 }
-
-TasksList.propTypes = {
-    date: PropTypes.any.isRequired
-};
 
 const styles = {
     container: {

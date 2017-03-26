@@ -1,12 +1,18 @@
 'use strict';
 
 import React, {PureComponent} from 'react'
-
 import {connect} from 'react-redux'
-
 import {View, Dimensions} from 'react-native';
 
 const {height, width} = Dimensions.get('window');
+
+import * as modalConstants from '../../../constatns/modal';
+
+import CalendarDialog from '../../../components/modals/CalendarDialog';
+
+const mapModals = {
+    [modalConstants.SHOW_CALENDAR_PICKER]: CalendarDialog
+};
 
 class ModalRoot extends PureComponent {
     constructor(props) {
@@ -14,9 +20,14 @@ class ModalRoot extends PureComponent {
     }
 
     render() {
+        const {modalType, modalProps} = this.props;
+
         if (!this.props.modalType) {
             return null;
         }
+
+        let TargetModal = modalConstants[this.props.modalType];
+
         return (<View style={styles.container}>
 
         </View>);

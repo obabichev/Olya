@@ -2,15 +2,13 @@
 
 import React, {Component} from 'react';
 
-import {View, Dimensions} from 'react-native';
+import {View, Text, Dimensions} from 'react-native';
 
 const {height, width} = Dimensions.get('window');
 
 export default class CalendarDialog extends Component {
     render() {
-        return (<View style={styles.container}>
-
-        </View>);
+        return (<Text>HIIIII</Text>);
     }
 };
 
