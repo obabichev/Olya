@@ -40,7 +40,7 @@ class TasksList extends Component {
 
     renderTaskItem = task => {
         const backgroundStyle = {
-            backgroundColor: task.content.color + '7F',
+            backgroundColor: task.content.color + '4F',
             width: 10000,
             height: 10000,
             position: 'absolute',
@@ -54,14 +54,14 @@ class TasksList extends Component {
             width: 10,
         };
 
-        return <ListItem thumbnail>
+        return <ListItem onPress={this.props.navigateToTaskDetailsScreen(task._id)} thumbnail>
             <View style={styles.container}>
                 <View style={backgroundStyle}>
                     <View style={internalBackground}/>
                 </View>
                 <Body>
                 <Text>{task.content.title}</Text>
-                <Text note>{task.content.text}</Text>
+                <Text note>{task.content.description}</Text>
                 </Body>
             </View>
         </ListItem>;
@@ -116,7 +116,8 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     updateTasks: () => dispatch(uploadTasks()),
-    navigateToCreateTaskScreen: () => dispatch(push({key: screens.CREATE_TASK_SCREEN}))
+    navigateToCreateTaskScreen: () => dispatch(push({key: screens.CREATE_TASK_SCREEN})),
+    navigateToTaskDetailsScreen: taskId => () => dispatch(push({key: screens.TASK_DETAILS_SCREEN, taskId: taskId}))
 });
 
 const styles = {

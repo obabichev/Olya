@@ -18,6 +18,7 @@ import SplashScreen from '../SplashScreen';
 import Launch from '../LaunchScreen';
 import TasksList from '../TasksList';
 import CreateTaskScreen from '../CreateTaskScreen';
+import TaskDetailsScreen from '../TaskDetailsScreen';
 
 import {push, pop} from '../../actions/router';
 
@@ -51,6 +52,8 @@ class MainRouter extends Component {
                 return <Launch/>;
             case screenConstans.CREATE_TASK_SCREEN:
                 return <CreateTaskScreen/>;
+            case screenConstans.TASK_DETAILS_SCREEN:
+                return <TaskDetailsScreen/>;
             default:
                 return null;
         }
