@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {AsyncStorage} from 'react-native';
+import {AsyncStorage, View} from 'react-native';
 import {connect} from 'react-redux';
 
 import {
@@ -21,7 +21,17 @@ import CreateTaskScreen from '../../screens/CreateTaskScreen';
 import TaskDetailsScreen from '../../screens/TaskDetailsScreen';
 
 import {push, pop} from '../../../actions/router';
+import {hideModal} from '../../../actions/modal';
 
+import ModalRoot from '../ModalRoot';
+
+const screensMap = {
+    [screenConstans.SPLASH_SCREEN]: SplashScreen,
+    [screenConstans.TASKS_LIST_SCREEN]: TasksList,
+    [screenConstans.LAUNCH_SCREEN]: Launch,
+    [screenConstans.CREATE_TASK_SCREEN]: CreateTaskScreen,
+    [screenConstans.TASK_DETAILS_SCREEN]: TaskDetailsScreen
+};
 
 class MainRouter extends Component {
 
@@ -34,6 +44,10 @@ class MainRouter extends Component {
     }
 
     _handleBackAction = () => {
+        if (this.props.modalType) {
+            this.props.hideModal();
+            return true;
+        }
         if (this.props.index === 0) {
             return false
         }
@@ -41,23 +55,18 @@ class MainRouter extends Component {
         return true
     };
 
+
     _renderScene() {
         const {scene} = this.props;
-        switch (scene.key) {
-            case screenConstans.SPLASH_SCREEN:
-                return <SplashScreen/>;
-            case screenConstans.TASKS_LIST_SCREEN:
-                return <TasksList/>;
-            case screenConstans.LAUNCH_SCREEN:
-                return <Launch/>;
-            case screenConstans.CREATE_TASK_SCREEN:
-                return <CreateTaskScreen/>;
-            case screenConstans.TASK_DETAILS_SCREEN:
-                return <TaskDetailsScreen/>;
-            default:
-                return null;
-        }
+
+        let TargetScreen = screensMap[scene.key];
+
+        return (<View style={{flex:1}}>
+            <TargetScreen/>
+            <ModalRoot/>
+        </View>);
     }
+
 
     render() {
         return this._renderScene();
@@ -67,12 +76,14 @@ class MainRouter extends Component {
 const mapStateToProps = state => {
     return {
         scene: state.router.scene,
-        index: state.router.routes.length - 1
+        index: state.router.routes.length - 1,
+        modalType: state.modal.modalType
     }
 };
 
 const mapDispatchToProps = dispatch => ({
-    popRoute: () => dispatch(pop())
+    popRoute: () => dispatch(pop()),
+    hideModal: () => dispatch(hideModal())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainRouter);

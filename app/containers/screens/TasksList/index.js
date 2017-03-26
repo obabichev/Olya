@@ -32,7 +32,7 @@ import {connectStyle} from 'native-base';
 import _ from 'lodash';
 
 import {SHOW_CALENDAR_PICKER} from '../../../constatns/modal';
-import {showModel} from '../../../actions/modal';
+import {showModal} from '../../../actions/modal';
 
 import {push, replaceLast} from '../../../actions/router';
 import {uploadTasks} from '../../../actions/tasks';
@@ -235,7 +235,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     navigateToCreateTaskScreen: () => dispatch(push({key: screens.CREATE_TASK_SCREEN})),
     navigateToTaskDetailsScreen: taskId => () => dispatch(push({key: screens.TASK_DETAILS_SCREEN, taskId: taskId})),
     moveToDate: timestamp => dispatch(replaceLast({key: screens.TASKS_LIST_SCREEN, timestamp: timestamp})),
-    showCalendarPicker: props => dispatch(showModel(SHOW_CALENDAR_PICKER, props))
+    showCalendarPicker: props => dispatch(showModal(SHOW_CALENDAR_PICKER, props))
 });
 
 
