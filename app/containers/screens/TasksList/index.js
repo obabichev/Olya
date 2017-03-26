@@ -3,6 +3,10 @@
 import React, {Component, PropTypes} from 'react';
 import {View, RefreshControl} from 'react-native';
 import {
+    BackAndroid,
+    NavigationExperimental
+} from 'react-native';
+import {
     Container,
     Header,
     Title,
@@ -27,20 +31,48 @@ import {connectStyle} from 'native-base';
 
 import _ from 'lodash';
 
+import {SHOW_CALENDAR_PICKER} from '../../../constatns/modal';
+import {showModel} from '../../../actions/modal';
 
-import {push, replaceLast} from '../../actions/router';
-import {uploadTasks} from '../../actions/tasks';
-import {dateToDayid, isTheSameDay} from '../../util';
+import {push, replaceLast} from '../../../actions/router';
+import {uploadTasks} from '../../../actions/tasks';
+import {dateToDayid, isTheSameDay} from '../../../util';
 
-import * as screens from '../../constatns/screens';
+import CalendarDialog from '../../../components/calendar/CalendarDialog';
+
+import * as screens from '../../../constatns/screens';
 
 class TasksList extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            showCalendarDialog: false
+        };
+    }
 
     componentDidMount() {
         if (_.keys(this.props.tasks).length === 0) {
             this.props.updateTasks();
         }
+
+        // BackAndroid.addEventListener('hardwareBackPress', this.handleBackAction)
     }
+
+    // componentWillUnmount() {
+    //     BackAndroid.removeEventListener('hardwareBackPress', this.handleBackAction)
+    // }
+
+    // handleBackAction = () => {
+    //     if (!this.showCalendarDialog) {
+    //         return;
+    //     }
+    //     this.setState({
+    //         showCalendarDialog: false,
+    //     });
+    //     return true
+    // };
 
     renderTasksList = () => <List dataArray={this.props.tasks} renderRow={this.renderTaskItem}/>;
 
@@ -96,6 +128,21 @@ class TasksList extends Component {
         this.props.moveToDate((new Date()).getTime());
     };
 
+    showCalendarDialog = () => {
+        this.props.showCalendarPicker();
+        return;
+        this.setState({showCalendarDialog: true});
+
+        let backListener = () => {
+            this.setState({showCalendarDialog: false});
+            BackAndroid.removeEventListener('hardwareBackPress', backListener);
+            return true;
+        };
+        BackAndroid.addEventListener('hardwareBackPress', backListener)
+    };
+
+    renderCalendarDialog = () => (<CalendarDialog/>);
+
     render() {
         const {date} = this.props;
 
@@ -131,7 +178,7 @@ class TasksList extends Component {
                         <Button onPress={this.moveToPreviousDay}>
                             <Icon name="md-arrow-back"/>
                         </Button>
-                        <Button>
+                        <Button onPress={this.showCalendarDialog}>
                             <Icon name="calendar"/>
                         </Button>
                         <Button onPress={this.moveToToday} active>
@@ -142,6 +189,10 @@ class TasksList extends Component {
                         </Button>
                     </FooterTab>
                 </Footer>
+
+                <View></View>
+
+                {this.state.showCalendarDialog ? this.renderCalendarDialog() : null}
 
             </Container>
         );
@@ -183,7 +234,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     updateTasks: () => dispatch(uploadTasks()),
     navigateToCreateTaskScreen: () => dispatch(push({key: screens.CREATE_TASK_SCREEN})),
     navigateToTaskDetailsScreen: taskId => () => dispatch(push({key: screens.TASK_DETAILS_SCREEN, taskId: taskId})),
-    moveToDate: timestamp => dispatch(replaceLast({key: screens.TASKS_LIST_SCREEN, timestamp: timestamp}))
+    moveToDate: timestamp => dispatch(replaceLast({key: screens.TASKS_LIST_SCREEN, timestamp: timestamp})),
+    showCalendarPicker: props => dispatch(showModel(SHOW_CALENDAR_PICKER, props))
 });
 
 

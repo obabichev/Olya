@@ -16,7 +16,7 @@ const {
 import * as screenConstans from '../../constatns/screens';
 import SplashScreen from '../SplashScreen';
 import Launch from '../LaunchScreen';
-import TasksList from '../TasksList';
+import TasksList from '../screens/TasksList';
 import CreateTaskScreen from '../CreateTaskScreen';
 import TaskDetailsScreen from '../TaskDetailsScreen';
 
