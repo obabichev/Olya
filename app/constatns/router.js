@@ -6,6 +6,8 @@ export const POP_ROUTE = 'POP_ROUTE';
 
 export const RESET_ROUTE = 'RESET_ROUTE';
 
+export const REPLACE_LAST = 'REPLACE_LAST';
+
 
 export const START_DOWNLOADING = 'START_DOWNLOADING';
 

@@ -16,6 +16,11 @@ export const reset = route => ({
     route
 });
 
+export const replaceLast = route => ({
+    type: routerConstants.REPLACE_LAST,
+    route
+});
+
 
 export const openNavBar = () => ({
     type: routerConstants.OPEN_NAV_BAR

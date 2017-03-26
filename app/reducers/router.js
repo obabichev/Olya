@@ -3,6 +3,8 @@
 import * as routerConstants from '../constatns/router';
 import * as screenConstants from '../constatns/screens';
 
+import _ from 'lodash';
+
 import {NavigationExperimental} from 'react-native'
 const {
     StateUtils: NavigationStateUtils
@@ -24,7 +26,7 @@ const initialRoute = {
 
 const router = (state = initialRoute, action) => {
     if (action.route) {
-        console.log(`Switch to ${action.route}`);
+        console.log(`Switch to ${action.route.key}`);
     }
     switch (action.type) {
         case routerConstants.PUSH_ROUTE:
@@ -41,6 +43,12 @@ const router = (state = initialRoute, action) => {
                 index: 0,
                 routes: [action.route],
             };
+        case routerConstants.REPLACE_LAST:
+            return {
+                ...state,
+                routes: _.concat(_.dropRight(state.routes), action.route)
+            };
+
 
         case routerConstants.START_DOWNLOADING:
             return {

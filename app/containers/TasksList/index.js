@@ -16,7 +16,11 @@ import {
     List,
     ListItem,
     Spinner,
-    Fab
+    Fab,
+    DeckSwiper,
+    Swipeout,
+    Footer,
+    FooterTab
 } from 'native-base';
 import {connect} from 'react-redux';
 import {connectStyle} from 'native-base';
@@ -24,7 +28,7 @@ import {connectStyle} from 'native-base';
 import _ from 'lodash';
 
 
-import {push} from '../../actions/router';
+import {push, replaceLast} from '../../actions/router';
 import {uploadTasks} from '../../actions/tasks';
 import {dateToDayid, isTheSameDay} from '../../util';
 
@@ -76,6 +80,22 @@ class TasksList extends Component {
 
     refresh = () => this.props.updateTasks();
 
+    moveToPreviousDay = () => {
+        let date = new Date(this.props.date);
+        date.setDate(date.getDate() - 1);
+        this.props.moveToDate(date.getTime());
+    };
+
+    moveToNextDay = () => {
+        let date = new Date(this.props.date);
+        date.setDate(date.getDate() + 1);
+        this.props.moveToDate(date.getTime());
+    };
+
+    moveToToday = () => {
+        this.props.moveToDate((new Date()).getTime());
+    };
+
     render() {
         const {date} = this.props;
 
@@ -97,13 +117,30 @@ class TasksList extends Component {
                     {this.renderTasksList()}
                 </Content>
                 <Fab
-                    active
-                    style={{ backgroundColor: '#5067FF' }}
+                    style={{ backgroundColor: '#5067FF'}}
                     position="bottomRight"
                     onPress={() => this.props.navigateToCreateTaskScreen()}
                 >
                     <Icon name="add"/>
                 </Fab>
+
+                <Footer >
+                    <FooterTab>
+                        <Button onPress={this.moveToPreviousDay}>
+                            <Icon name="md-arrow-back"/>
+                        </Button>
+                        <Button>
+                            <Icon name="calendar"/>
+                        </Button>
+                        <Button onPress={this.moveToToday} active>
+                            <Icon active name="home"/>
+                        </Button>
+                        <Button onPress={this.moveToNextDay}>
+                            <Icon name="md-arrow-forward"/>
+                        </Button>
+                    </FooterTab>
+                </Footer>
+
             </Container>
         );
     }
@@ -130,7 +167,8 @@ function findTasksByDate(tasks, date) {
 const mapDispatchToProps = (dispatch, ownProps) => ({
     updateTasks: () => dispatch(uploadTasks()),
     navigateToCreateTaskScreen: () => dispatch(push({key: screens.CREATE_TASK_SCREEN})),
-    navigateToTaskDetailsScreen: taskId => () => dispatch(push({key: screens.TASK_DETAILS_SCREEN, taskId: taskId}))
+    navigateToTaskDetailsScreen: taskId => () => dispatch(push({key: screens.TASK_DETAILS_SCREEN, taskId: taskId})),
+    moveToDate: timestamp => dispatch(replaceLast({key: screens.TASKS_LIST_SCREEN, timestamp: timestamp}))
 });
 
 const styles = {
