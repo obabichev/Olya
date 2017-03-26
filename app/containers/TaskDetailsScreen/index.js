@@ -54,7 +54,7 @@ TaskDetailsScreen.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-    task: _.find(_.concat(_.flatten(_.values(state.tasks.tasks))), task => task._id === state.router.routes[state.router.index].taskId)
+    task: state.tasks[state.router.routes[state.router.index].taskId]
 });
 
 const mapDispatchToProps = dispatch => ({});

@@ -1,26 +1,25 @@
 'use strict';
 
 import * as tasksTypes from '../constatns/tasks';
+import _ from 'lodash';
 
-
-const initialState = {
-    tasks: {}
-};
+const initialState = {};
 
 const tasks = (state = initialState, action) => {
-    let newState;
     switch (action.type) {
         case tasksTypes.FETCH_TASKS_LIST_ACTION:
-            newState = {...state};
-            newState.tasks[action.dayid] = action.tasks;
-            return newState;
+            const {tasks} = action;
+            return {
+                ...state,
+                ..._.zipObject(tasks.map(task => task._id), tasks)
+            };
         case tasksTypes.ADD_TASK_ACTION:
-            newState = {...state};
-            if (!newState.tasks[action.dayid]){
-                newState.tasks[action.dayid] = [];
-            }
-            newState.tasks[action.dayid].push(action.task);
-            return newState;
+            const {task} = action;
+            console.log(task);
+            return {
+                ...state,
+                [task._id]: task
+            };
         default:
             return state;
     }

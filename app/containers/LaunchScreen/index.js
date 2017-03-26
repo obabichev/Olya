@@ -26,7 +26,7 @@ class LaunchScreen extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    openTasksListScreen: () => dispatch(reset({key: screens.TASKS_LIST_SCREEN}))
+    openTasksListScreen: () => dispatch(reset({key: screens.TASKS_LIST_SCREEN, timestamp: (new Date).getTime()}))
 });
 
 export default connect(undefined, mapDispatchToProps)(LaunchScreen);

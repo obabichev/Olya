@@ -21,17 +21,19 @@ import {
 import {connect} from 'react-redux';
 import {connectStyle} from 'native-base';
 
+import _ from 'lodash';
+
 
 import {push} from '../../actions/router';
 import {uploadTasks} from '../../actions/tasks';
-import {dateToDayid} from '../../util';
+import {dateToDayid, isTheSameDay} from '../../util';
 
 import * as screens from '../../constatns/screens';
 
 class TasksList extends Component {
 
     componentDidMount() {
-        if (!this.props.tasks) {
+        if (_.keys(this.props.tasks).length === 0) {
             this.props.updateTasks();
         }
     }
@@ -75,6 +77,8 @@ class TasksList extends Component {
     refresh = () => this.props.updateTasks();
 
     render() {
+        const {date} = this.props;
+
         return (
             <Container>
                 <Header>
@@ -84,7 +88,7 @@ class TasksList extends Component {
                         </Button>
                     </Left>
                     <Body>
-                    <Title>Tasks list</Title>
+                    <Title>{`${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`}</Title>
                     </Body>
                     <Right />
                 </Header>
@@ -109,10 +113,19 @@ TasksList.propTypes = {
     date: PropTypes.any.isRequired
 };
 
-const mapStateToProps = (state, ownProps) => ({
-    tasks: state.tasks.tasks[dateToDayid(ownProps.date)],
-    downloading: state.router.downloading,
-});
+const mapStateToProps = (state, ownProps) => {
+    let date = new Date(_.last(state.router.routes).timestamp);
+    return {
+        tasks: findTasksByDate(state.tasks, date),
+        downloading: state.router.downloading,
+        date: date
+    }
+};
+
+function findTasksByDate(tasks, date) {
+    return _.values(tasks).filter(task => isTheSameDay(new Date(task.date.start), date));
+}
+
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     updateTasks: () => dispatch(uploadTasks()),
