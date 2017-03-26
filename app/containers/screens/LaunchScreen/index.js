@@ -4,8 +4,8 @@ import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import {connect} from 'react-redux';
 
-import {reset} from '../../actions/router';
-import * as screens from '../../constatns/screens';
+import {reset} from '../../../actions/router';
+import * as screens from '../../../constatns/screens';
 
 class LaunchScreen extends Component {
 

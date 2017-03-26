@@ -6,10 +6,10 @@ import {Container, Header, Left, Button, Icon, Body, Title, Content, Right} from
 
 import {connect} from 'react-redux';
 
-import CreateTaskForm from '../../components/tasks/CreateTaskForm';
+import CreateTaskForm from '../../../components/tasks/CreateTaskForm';
 
-import {pop} from '../../actions/router';
-import {createTask} from '../../actions/tasks';
+import {pop} from '../../../actions/router';
+import {createTask} from '../../../actions/tasks';
 
 class CreateTaskScreen extends PureComponent {
 

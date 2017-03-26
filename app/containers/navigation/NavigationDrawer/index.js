@@ -4,8 +4,8 @@ import React, {Component} from 'react';
 import {Drawer} from 'native-base';
 import {connect} from 'react-redux';
 
-import SideBar from '../../components/menu/SideBar';
-import {closeNavBar} from '../../actions/router';
+import SideBar from '../../../components/menu/SideBar';
+import {closeNavBar} from '../../../actions/router';
 
 class NavigationDrawer extends Component {
 

@@ -5,9 +5,9 @@ import {Provider} from 'react-redux';
 import {Text, View, AsyncStorage} from 'react-native';
 
 
-import MainRouter from './MainRouter';
+import MainRouter from './navigation/MainRouter';
 import configureStore from '../core/store';
-import NavigationDrawer from './NavigationDrawer';
+import NavigationDrawer from './navigation/NavigationDrawer';
 
 const store = configureStore();
 

@@ -13,14 +13,14 @@ const {
 } = NavigationExperimental;
 
 
-import * as screenConstans from '../../constatns/screens';
-import SplashScreen from '../SplashScreen';
-import Launch from '../LaunchScreen';
-import TasksList from '../screens/TasksList';
-import CreateTaskScreen from '../CreateTaskScreen';
-import TaskDetailsScreen from '../TaskDetailsScreen';
+import * as screenConstans from '../../../constatns/screens';
+import SplashScreen from '../../screens/SplashScreen';
+import Launch from '../../screens/LaunchScreen';
+import TasksList from '../../screens/TasksList';
+import CreateTaskScreen from '../../screens/CreateTaskScreen';
+import TaskDetailsScreen from '../../screens/TaskDetailsScreen';
 
-import {push, pop} from '../../actions/router';
+import {push, pop} from '../../../actions/router';
 
 
 class MainRouter extends Component {
