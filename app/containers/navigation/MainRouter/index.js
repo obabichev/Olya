@@ -19,6 +19,7 @@ import Launch from '../../screens/LaunchScreen';
 import TasksList from '../../screens/TasksList';
 import CreateTaskScreen from '../../screens/CreateTaskScreen';
 import TaskDetailsScreen from '../../screens/TaskDetailsScreen';
+import LoginScreen from '../../screens/LoginScreen';
 
 import {push, pop} from '../../../actions/router';
 import {hideModal} from '../../../actions/modal';
@@ -27,10 +28,11 @@ import ModalRoot from '../ModalRoot';
 
 const screensMap = {
     [screenConstans.SPLASH_SCREEN]: SplashScreen,
+    [screenConstans.LOGIN_SCREEN]: LoginScreen,
     [screenConstans.TASKS_LIST_SCREEN]: TasksList,
     [screenConstans.LAUNCH_SCREEN]: Launch,
     [screenConstans.CREATE_TASK_SCREEN]: CreateTaskScreen,
-    [screenConstans.TASK_DETAILS_SCREEN]: TaskDetailsScreen
+    [screenConstans.TASK_DETAILS_SCREEN]: TaskDetailsScreen,
 };
 
 class MainRouter extends Component {

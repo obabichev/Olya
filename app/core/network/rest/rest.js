@@ -3,11 +3,9 @@
 import {validateResponseBody, validateResponseStatus} from '../validator';
 
 export async function get(path) {
-
     let result = await fetch(path, {
         method: 'GET'
     });
-    await sleep(2000);
 
     console.log(`GET: ${path}, status:${result.status}`);
 
