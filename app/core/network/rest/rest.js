@@ -2,10 +2,28 @@
 
 import {validateResponseBody, validateResponseStatus} from '../validator';
 
+import {getAccessToken} from '../util';
+
+import store from '../../store';
+import {updateAccessToken} from '../../../actions/auth';
+import {fetchAccessToken} from '../auth';
+
+
 export async function get(path) {
-    let result = await fetch(path, {
-        method: 'GET'
+
+    const request = async(token) => await fetch(path, {
+        method: 'GET',
+        headers: {
+            "X-Access-Token": token
+        }
     });
+
+    let result = await request(getAccessToken());
+
+    if (result.status === 403) {
+        let token = await updateToken();
+        result = await request(token);
+    }
 
     console.log(`GET: ${path}, status:${result.status}`);
 
@@ -19,15 +37,21 @@ export async function get(path) {
 
 export async function post(path, body) {
 
-    let result = await fetch(path, {
+    let request = async token => await fetch(path, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            "X-Access-Token": token
         },
         body: body ? JSON.stringify(body) : ''
     });
 
-    // await sleep(5000);
+    let result = await request(getAccessToken());
+
+    if (result.status === 403) {
+        let token = await updateToken();
+        result = await request(token);
+    }
 
     console.log(`POST: ${path}, status:${result.status}`);
 
@@ -39,6 +63,9 @@ export async function post(path, body) {
     return resultBody.data;
 }
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+
+const updateToken = async() => {
+    let accessToken = await fetchAccessToken(store.getState().auth.refreshToken);
+    store.dispatch(updateAccessToken(accessToken.token));
+    return accessToken.token;
+};

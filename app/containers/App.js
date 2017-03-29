@@ -6,10 +6,8 @@ import {Text, View, AsyncStorage} from 'react-native';
 
 
 import MainRouter from './navigation/MainRouter';
-import configureStore from '../core/store';
+import store from '../core/store';
 import NavigationDrawer from './navigation/NavigationDrawer';
-
-const store = configureStore();
 
 export default class App extends Component {
 

@@ -7,6 +7,8 @@ import * as tasksTypes from '../constatns/tasks';
 
 import {fetchTasksList, createTaskRequest} from '../core/network/tasks';
 
+import {errorAction} from './error';
+
 import * as util from '../util';
 
 const updateTasks = (tasks, dayid) => ({
@@ -28,7 +30,7 @@ const fetchTasksListAction = () => {
     let date = new Date();
     return dispatch => fetchTasksList().then(
         tasks => dispatch(updateTasks(tasks, util.dateToDayid(date))),
-        error => Alert.alert(`Error ${error.message}`)
+        error => dispatch(errorAction(error))
     );
 };
 
@@ -41,7 +43,7 @@ export const createTask = task => dispatch => Promise.resolve()
 export const createTaskCall = task => {
     return dispatch => createTaskRequest(task).then(
         result => dispatch(addTask(result)),
-        error => Alert.alert(`Error ${error.message}`)
+        error => dispatch(errorAction(error))
     );
 };
 

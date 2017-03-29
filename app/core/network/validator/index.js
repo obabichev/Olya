@@ -6,6 +6,7 @@ export const validateResponseStatus = status => {
             return;
         default:
             throw {
+                status: status,
                 message: `Network problem (${status})`
             }
     }
@@ -17,6 +18,6 @@ export const validateResponseBody = body => {
     }
 
     throw {
-        message: body.data
+        message: body.data.message
     }
 };

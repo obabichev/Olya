@@ -11,6 +11,8 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import {reset} from '../../actions/router';
 import {LAUNCH_SCREEN} from '../../constatns/screens';
 
+import errorHandler from '../../middleware/errorHandler';
+
 const route = {
     key: LAUNCH_SCREEN,
     title: 'Launch'
@@ -21,20 +23,18 @@ const persistingOptions = {
     whitelist: ['tasks'],
 };
 
-const middlewares = [thunk];
+const middlewares = [thunk, errorHandler];
 const enhancer = composeWithDevTools({})(
     applyMiddleware(...middlewares),
     autoRehydrate()
 );
 
-export default function configureStore(initialState) {
-    const store = createStore(reducer, initialState, enhancer);
-    persistStore(store, persistingOptions, () => store.dispatch(reset(route)));
+const store = createStore(reducer, {}, enhancer);
+persistStore(store, persistingOptions, () => store.dispatch(reset(route)));
 
-    if (module.hot) {
-        module.hot.accept(() => {
-            store.replaceReducer(reducer);
-        })
-    }
-    return store
+if (module.hot) {
+    module.hot.accept(() => {
+        store.replaceReducer(reducer);
+    })
 }
+export default store;
