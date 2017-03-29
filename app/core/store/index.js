@@ -20,7 +20,7 @@ const route = {
 
 const persistingOptions = {
     storage: AsyncStorage,
-    whitelist: ['tasks'],
+    whitelist: ['tasks', 'auth'],
 };
 
 const middlewares = [thunk, errorHandler];
