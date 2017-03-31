@@ -2,11 +2,12 @@
 
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import {View, Dimensions, StyleSheet, Text, Button} from 'react-native';
+import {View, Dimensions, StyleSheet, Text, Button, TouchableHighlight} from 'react-native';
 
 const {height, width} = Dimensions.get('window');
 
 import * as modalConstants from '../../../constatns/modal';
+import {hideModal} from '../../../actions/modal';
 
 import CalendarDialog from '../../../components/modals/CalendarDialog';
 
@@ -20,6 +21,8 @@ class ModalRoot extends PureComponent {
         super(props);
     }
 
+    onEmptyFieldClick = () => this.props.hideModal();
+
     render() {
 
         const {modalType, modalProps} = this.props;
@@ -31,7 +34,12 @@ class ModalRoot extends PureComponent {
         let TargetModal = mapModals[modalType];
 
         return (<View style={styles.container}>
-            <TargetModal {...modalProps}/>
+            <TouchableHighlight style={styles.touchable}
+                                onPress={this.onEmptyFieldClick}>
+                <View>
+                    <TargetModal {...modalProps}/>
+                </View>
+            </TouchableHighlight>
         </View>);
     }
 }
@@ -44,9 +52,12 @@ const styles = StyleSheet.create({
         right: 0,
         width: width,
         height: height,
+    },
+    touchable: {
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
-    },
+    }
 });
 
 const mapStateToProps = state => ({
@@ -54,6 +65,8 @@ const mapStateToProps = state => ({
     modalProps: state.modal.modalProps
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+    hideModal: () => dispatch(hideModal())
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalRoot);
