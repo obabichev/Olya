@@ -105,8 +105,13 @@ class TasksList extends Component {
     };
 
     showCalendarDialog = () => {
-        this.props.showCalendarPicker();
+        this.props.showCalendarPicker(this.calendarPickerProps());
     };
+
+    calendarPickerProps = () => ({
+        selectedDate: this.props.date,
+        onDateChange: date => this.props.moveToDate(date),
+    });
 
     render() {
         const {date} = this.props;

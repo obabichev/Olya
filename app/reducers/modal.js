@@ -10,7 +10,6 @@ const initialState = {
 const modal = (state = initialState, action) => {
     switch (action.type) {
         case modalConstants.SHOW_MODAL:
-            console.log(action);
             return {
                 modalType: action.modalType,
                 modalProps: action.modalProps

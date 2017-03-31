@@ -13,7 +13,7 @@ class LoginScreen extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            login: 'TestAdmin',
+            login: '',
             password: ''
         }
     }
