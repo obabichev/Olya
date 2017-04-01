@@ -13,6 +13,7 @@
     "react-native": "0.42.0",
     "react-native-calendar-picker": "^3.0.0",
     "react-native-color-picker": "^0.2.1",
+    "react-native-swiper": "^1.5.4",
     "react-redux": "^5.0.2",
     "redux": "^3.6.0",
     "redux-devtools-extension": "^2.13.0",

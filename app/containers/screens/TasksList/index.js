@@ -34,6 +34,8 @@ import {isTheSameDay} from '../../../util';
 
 import * as screens from '../../../constatns/screens';
 
+import InfiniteSwiper from '../../navigation/InfiniteSwiper';
+
 class TasksList extends Component {
 
     constructor(props) {
@@ -113,8 +115,13 @@ class TasksList extends Component {
         onDateChange: date => this.props.moveToDate(date),
     });
 
-    // title = date => `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
-    title = date => date.toDateString();
+    title = date => `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+    // title = date => date.toDateString();
+
+    screenContent = () => <View>
+        {this.props.downloading ? (<Spinner color='blue'/>) : null}
+        {this.renderTasksList()}
+    </View>;
 
     render() {
         const {date} = this.props;
@@ -132,10 +139,13 @@ class TasksList extends Component {
                     </Body>
                     <Right />
                 </Header>
+
                 <Content refreshControl={this.refreshControl()}>
-                    {this.props.downloading ? (<Spinner color='blue'/>) : null}
-                    {this.renderTasksList()}
+                    <InfiniteSwiper onRight={this.moveToPreviousDay} onLeft={this.moveToNextDay}>
+                        {this.screenContent()}
+                    </InfiniteSwiper>
                 </Content>
+
                 <Fab
                     style={{ backgroundColor: '#5067FF'}}
                     containerStyle={styles.fab}
