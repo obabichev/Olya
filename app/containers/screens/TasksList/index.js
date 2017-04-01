@@ -7,14 +7,12 @@ import {
     Header,
     Title,
     Button,
-    Text,
     Left,
     Right,
     Body,
     Icon,
     Content,
     List,
-    ListItem,
     Spinner,
     Fab,
     Footer,
@@ -29,12 +27,13 @@ import {SHOW_CALENDAR_PICKER} from '../../../constatns/modal';
 import {showModal} from '../../../actions/modal';
 
 import {push, replaceLast} from '../../../actions/router';
-import {uploadTasks} from '../../../actions/tasks';
+import {uploadTasks, changeTaskStatus} from '../../../actions/tasks';
 import {isTheSameDay} from '../../../util';
 
 import * as screens from '../../../constatns/screens';
 
 import InfiniteSwiper from '../../navigation/InfiniteSwiper';
+import TasksListItem from '../../../components/tasks/TasksListItem';
 
 class TasksList extends Component {
 
@@ -55,32 +54,9 @@ class TasksList extends Component {
     renderTasksList = () => <List dataArray={this.props.tasks} renderRow={this.renderTaskItem}/>;
 
     renderTaskItem = task => {
-        const backgroundStyle = {
-            backgroundColor: task.content.color + '4F',
-            width: 10000,
-            height: 10000,
-            position: 'absolute',
-            left: 0,
-            top: 0,
-        };
-
-        const internalBackground = {
-            ...backgroundStyle,
-            backgroundColor: task.content.color,
-            width: 10,
-        };
-
-        return <ListItem onPress={this.props.navigateToTaskDetailsScreen(task._id)} thumbnail>
-            <View style={styles.container}>
-                <View style={backgroundStyle}>
-                    <View style={internalBackground}/>
-                </View>
-                <Body>
-                <Text>{task.content.title}</Text>
-                <Text note>{task.content.description}</Text>
-                </Body>
-            </View>
-        </ListItem>;
+        return <TasksListItem task={task}
+                              onPress={this.props.navigateToTaskDetailsScreen(task._id)}
+                              changeStatus={status => this.props.changeTaskStatus(task, status)}/>;
     };
 
     refreshControl = () => <RefreshControl
@@ -151,8 +127,7 @@ class TasksList extends Component {
                     containerStyle={styles.fab}
                     position="bottomRight"
                     active={false}
-                    onPress={() => this.props.navigateToCreateTaskScreen()}
-                >
+                    onPress={() => this.props.navigateToCreateTaskScreen()}>
                     <Icon name="add"/>
                 </Fab>
 
@@ -209,7 +184,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     navigateToCreateTaskScreen: () => dispatch(push({key: screens.CREATE_TASK_SCREEN})),
     navigateToTaskDetailsScreen: taskId => () => dispatch(push({key: screens.TASK_DETAILS_SCREEN, taskId: taskId})),
     moveToDate: timestamp => dispatch(replaceLast({key: screens.TASKS_LIST_SCREEN, timestamp: timestamp})),
-    showCalendarPicker: props => dispatch(showModal(SHOW_CALENDAR_PICKER, props))
+    showCalendarPicker: props => dispatch(showModal(SHOW_CALENDAR_PICKER, props)),
+    changeTaskStatus: (task, status) => dispatch(changeTaskStatus(task, status))
 });
 
 

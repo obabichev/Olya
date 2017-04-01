@@ -5,7 +5,7 @@ import {Alert} from 'react-native';
 import {pop, startDownloading, stopDownloading} from './router'
 import * as tasksTypes from '../constatns/tasks';
 
-import {fetchTasksList, createTaskRequest} from '../core/network/tasks';
+import {fetchTasksList, createTaskRequest, updateTaskRequest} from '../core/network/tasks';
 
 import {errorAction} from './error';
 
@@ -48,6 +48,25 @@ export const createTaskCall = task => {
 };
 
 const addTask = (task) => ({
+    type: tasksTypes.ADD_TASK_ACTION,
+    task: task
+});
+
+export const changeTaskStatus = (task, status) => dispatch => {
+    return Promise.resolve()
+        .then(() => dispatch(startDownloading()))
+        .then(() => dispatch(updateTaskCall({...task, status: status})))
+        .then(() => dispatch(stopDownloading()));
+};
+
+const updateTaskCall = task => dispatch => {
+    return updateTaskRequest(task).then(
+        result => dispatch(updateTaskAction(result)),
+        error => dispatch(errorAction(error))
+    );
+};
+
+const updateTaskAction = (task) => ({
     type: tasksTypes.ADD_TASK_ACTION,
     task: task
 });

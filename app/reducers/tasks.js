@@ -13,6 +13,7 @@ const tasks = (state = initialState, action) => {
                 ...state,
                 ..._.zipObject(tasks.map(task => task._id), tasks)
             };
+        case tasksTypes.UPDATE_TASK_ACTION:
         case tasksTypes.ADD_TASK_ACTION:
             const {task} = action;
             console.log(task);

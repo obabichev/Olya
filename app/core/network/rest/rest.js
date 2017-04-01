@@ -36,9 +36,17 @@ export async function get(path) {
 }
 
 export async function post(path, body) {
+    return requestWithBody(path, body, 'POST')
+}
+
+export async function put(path, body) {
+    return requestWithBody(path, body, 'PUT')
+}
+
+export async function requestWithBody(path, body, method) {
 
     let request = async token => await fetch(path, {
-        method: 'POST',
+        method: method,
         headers: {
             'Content-Type': 'application/json',
             "X-Access-Token": token
@@ -53,7 +61,7 @@ export async function post(path, body) {
         result = await request(token);
     }
 
-    console.log(`POST: ${path}, status:${result.status}`);
+    console.log(`${method}: ${path}, status:${result.status}`);
 
     validateResponseStatus(result.status);
 
