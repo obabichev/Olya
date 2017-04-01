@@ -1,17 +1,16 @@
 'use strict';
 
 import React, {PureComponent, PropTypes} from 'react';
-import {View, Dimensions} from 'react-native';
-import {Item, Picker, Text, Form, Label, Input, Content, Button, Spinner} from 'native-base';
-import {ColorPicker} from 'react-native-color-picker'
+import {View, Dimensions, TouchableHighlight} from 'react-native';
+import {Item, Picker, Text, Form, Label, Input, Content, Button, Spinner, Thumbnail} from 'native-base';
 import {fromHsv} from 'react-native-color-picker'
-import CalendarPicker from 'react-native-calendar-picker';
 
 import _ from 'lodash';
 
 const dimensions = Dimensions.get('window');
 
 const priorityClassifier = require('../../../classifiers/priority.json');
+
 
 const defaultContent = {
     priority: 500,
@@ -46,6 +45,17 @@ class CreateTaskForm extends PureComponent {
 
     onDateChange = date => this.setState({date: date});// console.log(date.getTime());
 
+    calendarPickerProps = () => ({
+        selectedDate: this.state.date,
+        onDateChange: this.onDateChange
+    });
+
+    colorPickerProps = () => ({
+        onColorChange: this.onColorChange,
+        defaultColor: this.state.content.color
+    });
+
+
     onSubmit = () => {
         if (this.props.onSubmit) {
             this.props.onSubmit({
@@ -58,15 +68,24 @@ class CreateTaskForm extends PureComponent {
         }
     };
 
+    colorPickerView = () => <TouchableHighlight onPress={() => this.props.showColorPicker(this.colorPickerProps())}>
+        <View style={{margin: 5, width:64, height: 64, backgroundColor: this.state.content.color}}/>
+    </TouchableHighlight>;
+
     render() {
         return (<Form>
             <Content style={{margin: 10}}>
-                <Label>Priority</Label>
-                <Picker mode="dropdown"
-                        selectedValue={this.state.content.priority}
-                        onValueChange={this.onSelectPriority}>
-                    {this.priorityItems()}
-                </Picker>
+                <View style={{flexDirection:'row'}}>
+                    {this.colorPickerView()}
+                    <View style={{flex: 1}}>
+                        <Label>Priority</Label>
+                        <Picker mode="dropdown"
+                                selectedValue={this.state.content.priority}
+                                onValueChange={this.onSelectPriority}>
+                            {this.priorityItems()}
+                        </Picker>
+                    </View>
+                </View>
             </Content>
             <Item stackedLabel>
                 <Label>Title</Label>
@@ -76,17 +95,12 @@ class CreateTaskForm extends PureComponent {
                 <Label>Description</Label>
                 <Input onChangeText={this.onDescriptionChange}/>
             </Item>
-
-            <CalendarPicker selectedDate={this.state.date}
-                            screenWidth={dimensions.width - 10}
-                            onDateChange={this.onDateChange}/>
-
-            <ColorPicker
-                onColorSelected={color => console.log(`Color selected: ${color}`)}
-                onColorChange={this.onColorChange}
-                defaultColor={this.state.content.color}
-                style={{width: dimensions.width - 10, height: dimensions.width - 10, margin: 5}}
-            />
+            <Button onPress={() => this.props.showCalendarPicker(this.calendarPickerProps())}
+                    style={{margin: 10}}
+                    primary
+                    block>
+                <Text> {this.state.date.toDateString()} </Text>
+            </Button>
             {this.renderSubmitButton()}
         </Form>);
     }
@@ -99,6 +113,8 @@ class CreateTaskForm extends PureComponent {
 CreateTaskForm.propTypes = {
     onSubmit: PropTypes.func,
     downloading: PropTypes.bool,
+    showCalendarPicker: PropTypes.func,
+    showColorPicker: PropTypes.func,
 };
 
 export default CreateTaskForm;

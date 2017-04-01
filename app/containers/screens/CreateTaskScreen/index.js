@@ -10,6 +10,9 @@ import CreateTaskForm from '../../../components/tasks/CreateTaskForm';
 
 import {pop} from '../../../actions/router';
 import {createTask} from '../../../actions/tasks';
+import {showModal} from '../../../actions/modal';
+
+import {SHOW_CALENDAR_PICKER, SHOW_COLOR_PICKER} from '../../../constatns/modal';
 
 class CreateTaskScreen extends PureComponent {
 
@@ -31,7 +34,9 @@ class CreateTaskScreen extends PureComponent {
             <Content>
                 <CreateTaskForm
                     onSubmit={this.onSaveTask}
-                    downloading={this.props.downloading}/>
+                    downloading={this.props.downloading}
+                    showCalendarPicker={this.props.showModal(SHOW_CALENDAR_PICKER)}
+                    showColorPicker={this.props.showModal(SHOW_COLOR_PICKER)}/>
             </Content>
         </Container>);
     }
@@ -43,7 +48,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     saveNewTask: task => dispatch(createTask(task)),
-    back: () => dispatch(pop())
+    back: () => dispatch(pop()),
+    showModal: type => props => dispatch(showModal(type, props)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateTaskScreen);

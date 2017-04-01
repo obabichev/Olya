@@ -10,10 +10,12 @@ import * as modalConstants from '../../../constatns/modal';
 import {hideModal} from '../../../actions/modal';
 
 import CalendarDialog from '../../../components/modals/CalendarDialog';
+import ColorPickerDialog from '../../../components/modals/ColorPickerDialog';
 
 
 const mapModals = {
-    [modalConstants.SHOW_CALENDAR_PICKER]: CalendarDialog
+    [modalConstants.SHOW_CALENDAR_PICKER]: CalendarDialog,
+    [modalConstants.SHOW_COLOR_PICKER]: ColorPickerDialog
 };
 
 class ModalRoot extends PureComponent {

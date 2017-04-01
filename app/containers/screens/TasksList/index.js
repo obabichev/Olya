@@ -113,6 +113,9 @@ class TasksList extends Component {
         onDateChange: date => this.props.moveToDate(date),
     });
 
+    // title = date => `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+    title = date => date.toDateString();
+
     render() {
         const {date} = this.props;
 
@@ -125,7 +128,7 @@ class TasksList extends Component {
                         </Button>
                     </Left>
                     <Body>
-                    <Title>{`${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`}</Title>
+                    <Title>{this.title(date)}</Title>
                     </Body>
                     <Right />
                 </Header>
